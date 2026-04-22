@@ -20,7 +20,8 @@ GitHub: https://github.com/Join-xiaobai/MMCA
 ├── test.py            # Model testing and evaluation
 ├── crossTest.py       # 5-fold cross-validation
 ├── datas.zip          # Experimental datasets (COVID-19 & drug–target interaction)
-├── COVID-19.zip       # COVID-19 related data, code and prediction results
+├── COVID-19.zip       # COVID-19 related data, code and results
+├── COVID-19_drug_protein.csv       # prediction datas
 ├── data/
 │   ├── drug_feature.csv      # Drug feature file
 │   ├── protein_feature.csv   # Protein feature file
