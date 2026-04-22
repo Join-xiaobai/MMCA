@@ -1,64 +1,63 @@
-# MMCA：多模态协同注意力药物-靶点相互作用预测模型
-基于多模态协同注意力机制（Multi-Modal Co-Attention）实现高精度药物-靶点相互作用（DTI）预测，同时支持 COVID-19 相关药物挖掘场景。
+# MMCA: Multi-Modal Co-Attention Model for Drug-Target Interaction Prediction
+MMCA is a deep learning framework based on the **Multi-Modal Co-Attention** mechanism for accurate Drug-Target Interaction (DTI) prediction. It also supports anti-COVID-19 drug discovery and screening.
 
 ---
 
-## 仓库说明
-本项目包含 MMCA 模型完整代码、数据集与运行脚本，基于 **MIT 协议**开源。
-GitHub 地址：https://github.com/Join-xiaobai/MMCA
+## Repository Overview
+This repository contains the full implementation of the MMCA model, datasets, and running scripts. All code is open-sourced under the **MIT License**.
 
-## 运行环境
+GitHub: https://github.com/Join-xiaobai/MMCA
+
+## Requirements
 - Python 3.9+
 - PyTorch 1.13+
-- 支持 CPU / GPU 加速
-- 依赖：pandas, torch, torch_geometric 等
+- CPU / GPU supported
+- Dependencies: pandas, torch, torch_geometric, etc.
 
-## 文件结构
+## File Structure
 ```
-├── MMCA.py            # 模型训练主程序
-├── test.py            # 模型测试与指标计算
-├── crossTest.py       # 5 折交叉验证
-├── datas.zip          # 实验数据集压缩包（COVID-19数据集和drug_protein.csv药物-靶点交互数据集）
-├── COVID-19.zip       # 新冠相关预测数据、代码和结果
+├── MMCA.py            # Main training script
+├── test.py            # Model testing and evaluation
+├── crossTest.py       # 5-fold cross-validation
+├── datas.zip          # Experimental datasets (COVID-19 & drug–target interaction)
+├── COVID-19.zip       # COVID-19 related data, code and prediction results
 ├── data/
-│   ├── drug_feature.csv      # 药物特征文件
-│   ├── protein_feature.csv   # 蛋白质特征文件
-│   └── drug_protein.csv      # 药物-靶点交互数据
-├── outputs/            # 训练日志、结果输出
-├── bestModel/          # 最优模型保存路径
+│   ├── drug_feature.csv      # Drug feature file
+│   ├── protein_feature.csv   # Protein feature file
+│   └── drug_protein.csv      # Drug-target interaction data
+├── outputs/            # Training logs and output metrics
+├── bestModel/          # Best saved model checkpoint
 └── README.md
 ```
 
-## 快速使用
-1. 解压数据
+## Quick Start
+1. Unzip the dataset
 ```
 unzip datas.zip
 ```
-2. 训练模型
+2. Train the model
 ```
 python MMCA.py
 ```
-3. 测试模型（修改模型路径后运行）
+3. Test the model (update the model path first)
 ```
 python test.py
 ```
-4. 5 折交叉验证
+4. Run 5-fold cross-validation
 ```
 python crossTest.py
 ```
 
-## 功能说明
-- 药物特征：基于分子图结构 + Mol2vec 嵌入
-- 蛋白质特征：基于 Anc2vec 序列嵌入 + 手工理化特征
-- 多模态协同注意力融合药物与靶点信息
-- 输出：AUC、AUPR、F1-score、精确率、召回率等指标
-- 支持复现论文全部实验结果
+## Features
+- Drug representation: Molecular graph + Mol2vec embedding
+- Protein encoding: Anc2vec sequence embedding + handcrafted physicochemical features
+- Multi-modal co-attention for drug–target feature fusion
+- Output metrics: AUC, AUPR, F1-score, precision, recall
+- Full reproducibility of the paper’s experimental results
 
-## 超参数调整
-可根据硬件配置修改以下参数：
+## Hyperparameter Tuning
+You can adjust the following parameters according to your hardware:
 - batch_size
 - learning_rate
 - num_neighbors
-- 训练轮数、隐藏层维度等
-
----
+- training epochs, hidden dimensions, etc.
