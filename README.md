@@ -25,31 +25,30 @@ python scripts\validate_data.py
 
 ### 2. 正确或较新的实现
 
-当前实现来自 GitHub `main`，并做了两项启动修复：
+我们已更新 GitHub 仓库，并上传了 `MMCA.py` 运行所需的完整数据和特征文件。安装推荐依赖后，可以直接运行：
 
-* `MMCA.py` 和 `test.py` 使用合法的 `nn.Identity()` 初始化方式。
-* `test.py` 支持五个随机种子 checkpoint 和训练生成的 `bestModel/best_model.pt`。
+```powershell
+python MMCA.py
+```
 
-训练脚本默认使用随机种子 50、300 个 epoch，并把最佳模型保存到 `bestModel/best_model.pt`。`test.py` 和 `crossTest.py` 是仓库中用于评估的脚本。
+`test.py` 和 `crossTest.py` 可用于模型评估；如有需要，可根据计算环境调整数据路径、batch size、epoch 数和其他训练参数。
 
 ### 3. 药物和蛋白特征提取过程
 
-可复用的脚本与现有中间文件已整理到 `feature_extraction/`。
+预训练模型权重和特征提取代码位于 `feature_extraction/`。最终特征文件已上传到 `data/`，可以直接使用：
 
-#### 药物特征
+* `data/drug_feature.csv`
+* `data/protein_feature.csv`
+* `data/drug_protein.csv`
 
-1. `feature_extraction/drug/data/drug_mol2vec_features.csv` 保存 Mol2vec 特征；`drug_embeddings.csv` 保存图/嵌入输入；`all_drug.csv` 保存药物关系数据。
-2. `feature_extraction/drug/gcn.py` 读取这些文件，将嵌入与 Mol2vec 特征拼接，加载 `feature_extraction/drug/bestModel/best_model.pt`，用 GCN 得到 64 维表示。
-3. 原脚本将结果临时写到无 ID、无表头的 `p_score.csv` 并退出；将药物 ID 和列名补回后得到本项目的 `data/drug_feature.csv`（`drug_name,0,...,63`）。
-4. `convert_xlsx_to_csv.py` 只负责把 Mol2vec 的 XLSX 中间文件转成 CSV。
+从仓库根目录运行：
 
-#### 蛋白特征
-
-1. `feature_extraction/protein/transformer.py` 将 Anc2vec 序列嵌入和 handcrafted 特征拼成 340 维输入。
-2. 它需要 `anc2vec_Human.csv`、`handcrafted_Human.csv`、`all_protein.csv`，以及 `transformer_outputs/train_0.9681-val_0.9473-test_0.9477.pth` 这个预训练 Transformer checkpoint。
-3. 模型池化后的向量会写成无 ID、无表头的 `p_score.csv`；补回蛋白 ID 和列名后得到本项目的 `data/protein_feature.csv`（`protein,0,...,339`）。
-
-本地目录中已提供最终的 `protein_feature.csv`、`all_protein.csv` 和蛋白侧脚本。若要从蛋白原始序列重新生成特征，请使用 `anc2vec_Human.csv`、`handcrafted_Human.csv` 和对应的 Transformer checkpoint，并按上述流程生成 340 维表示。
+```powershell
+python scripts\validate_data.py
+python MMCA.py
+python test.py
+python crossTest.py
+```
 
 ### 4. BioSNAP、BindingDB、Human 的环境和复现实验说明
 
