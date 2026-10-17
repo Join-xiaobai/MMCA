@@ -160,7 +160,7 @@ class LTDTIModel(nn.Module):
             self.hidden_layers.append(nn.LeakyReLU())
             self.hidden_layers.append(nn.Dropout(0.2))
             # 添加残差连接
-            self.hidden_layers.append(nn.Identity(hidden_sizes[i], hidden_sizes[i + 1]))
+            self.hidden_layers.append(nn.Identity())
 
         # 输出层
         self.output_layer = nn.Sequential(
@@ -429,3 +429,4 @@ total_epoch = 300
 print('--'*20,'训练开始','--'*20)
 train_model(model, optimizer, criterion, total_epoch, train_loader, val_data, test_data, log_path, best_model_path)
 print('--'*20,'训练结束','--'*20)
+

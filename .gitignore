@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+outputs/
+test_log.txt
+bestModel/*.pt
+data/data/

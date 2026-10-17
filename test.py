@@ -124,7 +124,7 @@ class LTDTIModel(nn.Module):
             self.hidden_layers.append(nn.LeakyReLU())
             self.hidden_layers.append(nn.Dropout(0.2))
             # 添加残差连接
-            self.hidden_layers.append(nn.Identity(hidden_sizes[i], hidden_sizes[i + 1]))
+            self.hidden_layers.append(nn.Identity())
 
         # 输出层
         self.output_layer = nn.Sequential(
@@ -331,6 +331,8 @@ criterion = torch.nn.BCEWithLogitsLoss().to(device)
 randomseeds = [10, 20, 30, 40, 50]
 models = ['bestModel/best_model_10.pt', 'bestModel/best_model_20.pt', 'bestModel/best_model_30.pt',
           'bestModel/best_model_40.pt', 'bestModel/best_model_50.pt']
+# The public repository may contain only best_model.pt; use it as a safe fallback.
+models = [path if os.path.exists(path) else 'bestModel/best_model.pt' for path in models]
 
 # 数据集选择
 datasets = './data/drug_protein.csv'
@@ -393,3 +395,4 @@ metrics_print = cross_validation_metrics_print(accuracys, sensitivitys, specific
                                                aurocs, auprcs)
 print(metrics_print)
 logging.info(metrics_print)
+
